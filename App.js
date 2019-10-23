@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import {View} from 'react-native'
-import { Icon, Header } from 'react-native-elements';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import reduxThunk from 'redux-thunk';
+import AppInit from './AppInit';
+import reducers from './src/reducers';
 
-export class App extends Component {
+class App extends Component {
   render() {
     return (
-      <View>
-        <Header
-          placement='left'
-          leftComponent={{ icon: 'menu', color: 'black' }}
-          centerComponent={{ text: 'MY TITLE', style: { color: 'black' } }}
-          rightComponent={{ icon: 'home', color: 'black' }}
-          containerStyle={{marginTop : -25, justifyContent:'space-around', backgroundColor : '#fff'}}
-        />
-      </View>
-    );
+      <Provider store={createStore(reducers, {}, applyMiddleware(reduxThunk))}>
+        <AppInit />
+      </Provider>
+    )
   }
 }
 
